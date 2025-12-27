@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Sürüşü Randevu Sistemi</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <a href="/" class="logo">🚗 Test Sürüşü</a>
+            <ul class="nav-links">
+                <li><a th:href="@{/}">Ana Sayfa</a></li>
+                <li><a th:href="@{/vehicles}">Araçlar</a></li>
+                <li><a th:href="@{/appointments/new}">Randevu Al</a></li>
+                <li><a th:href="@{/appointments/my}">Randevularım</a></li>
+                <li><a th:href="@{/admin}" class="admin-link">Admin</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Test Sürüşü İçin Hemen Randevu Alın</h1>
+            <p>Hayalinizdeki aracı deneyimleyin. Ücretsiz test sürüşü randevunuzu şimdi oluşturun.</p>
+            <a th:href="@{/appointments/new}" class="btn btn-primary">Randevu Al</a>
+        </div>
+    </section>
+
+    <!-- Vehicles Section -->
+    <section class="vehicles-section">
+        <div class="container">
+            <h2>Mevcut Araçlarımız</h2>
+            <div class="vehicles-grid">
+                <div th:each="vehicle : ${vehicles}" class="vehicle-card">
+                    <div class="vehicle-image">
+                        <img th:src="@{${vehicle.imageUrl}}" th:alt="${vehicle.fullName}" 
+                             onerror="this.src='/images/default-car.png'">
+                    </div>
+                    <div class="vehicle-info">
+                        <h3 th:text="${vehicle.brand + ' ' + vehicle.model}">Marka Model</h3>
+                        <p class="vehicle-year" th:text="${vehicle.year}">2024</p>
+                        <p class="vehicle-desc" th:text="${vehicle.description}">Açıklama</p>
+                        <a th:href="@{/appointments/new(vehicleId=${vehicle.id})}" class="btn btn-secondary">
+                            Test Sürüşü Al
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Araç yoksa -->
+            <div th:if="${#lists.isEmpty(vehicles)}" class="no-vehicles">
+                <p>Şu anda mevcut araç bulunmamaktadır.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2024 Test Sürüşü Randevu Sistemi - STLC Projesi</p>
+    </footer>
+</body>
+</html>

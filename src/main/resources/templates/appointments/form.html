@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Randevu Al - Test Sürüşü</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <a href="/" class="logo">🚗 Test Sürüşü</a>
+            <ul class="nav-links">
+                <li><a th:href="@{/}">Ana Sayfa</a></li>
+                <li><a th:href="@{/vehicles}">Araçlar</a></li>
+                <li><a th:href="@{/appointments/new}" class="active">Randevu Al</a></li>
+                <li><a th:href="@{/appointments/my}">Randevularım</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <div class="form-container">
+                <h1>Test Sürüşü Randevusu</h1>
+
+                <!-- Hata Mesajı -->
+                <div th:if="${#fields.hasErrors('*')}" class="alert alert-error" id="errorAlert">
+                    <p>Lütfen formdaki hataları düzeltin.</p>
+                </div>
+
+                <form th:action="@{/appointments}" th:object="${appointmentForm}" method="post"
+                    class="appointment-form">
+
+                    <!-- Araç Seçimi -->
+                    <div class="form-group">
+                        <label for="vehicleId">Araç Seçin *</label>
+                        <select th:field="*{vehicleId}" id="vehicleId" class="form-control" required>
+                            <option value="">-- Araç Seçin --</option>
+                            <option th:each="vehicle : ${vehicles}" th:value="${vehicle.id}"
+                                th:text="${vehicle.fullName}">
+                            </option>
+                        </select>
+                        <span th:if="${#fields.hasErrors('vehicleId')}" th:errors="*{vehicleId}" class="error-message"
+                            id="vehicleIdError"></span>
+                    </div>
+
+                    <!-- Müşteri Bilgileri -->
+                    <div class="form-group">
+                        <label for="customerName">Ad Soyad *</label>
+                        <input type="text" th:field="*{customerName}" id="customerName" class="form-control"
+                            placeholder="Adınız Soyadınız" required>
+                        <span th:if="${#fields.hasErrors('customerName')}" th:errors="*{customerName}"
+                            class="error-message" id="customerNameError"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="customerPhone">Telefon *</label>
+                        <input type="tel" th:field="*{customerPhone}" id="customerPhone" class="form-control"
+                            placeholder="05XX XXX XX XX" required>
+                        <span th:if="${#fields.hasErrors('customerPhone')}" th:errors="*{customerPhone}"
+                            class="error-message" id="customerPhoneError"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="customerEmail">E-posta (Opsiyonel)</label>
+                        <input type="email" th:field="*{customerEmail}" id="customerEmail" class="form-control"
+                            placeholder="ornek@email.com">
+                        <span th:if="${#fields.hasErrors('customerEmail')}" th:errors="*{customerEmail}"
+                            class="error-message" id="customerEmailError"></span>
+                    </div>
+
+                    <!-- Randevu Tarihi ve Saati -->
+                    <div class="form-row">
+                        <div class="form-group half">
+                            <label for="appointmentDate">Tarih *</label>
+                            <input type="date" th:field="*{appointmentDate}" id="appointmentDate" class="form-control"
+                                th:min="${#temporals.format(#temporals.createNow(), 'yyyy-MM-dd')}" required>
+                            <span th:if="${#fields.hasErrors('appointmentDate')}" th:errors="*{appointmentDate}"
+                                class="error-message" id="appointmentDateError"></span>
+                        </div>
+
+                        <div class="form-group half">
+                            <label for="appointmentTime">Saat *</label>
+                            <select th:field="*{appointmentTime}" id="appointmentTime" class="form-control" required>
+                                <option value="">-- Saat Seçin --</option>
+                                <option th:each="time : ${availableTimes}" th:value="${time}"
+                                    th:text="${#temporals.format(time, 'HH:mm')}">
+                                </option>
+                            </select>
+                            <span th:if="${#fields.hasErrors('appointmentTime')}" th:errors="*{appointmentTime}"
+                                class="error-message" id="appointmentTimeError"></span>
+                        </div>
+                    </div>
+
+                    <!-- Not -->
+                    <div class="form-group">
+                        <label for="notes">Not (Opsiyonel)</label>
+                        <textarea th:field="*{notes}" id="notes" class="form-control" rows="3"
+                            placeholder="Eklemek istediğiniz notlar..."></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-large" id="submitBtn">
+                        Randevu Oluştur
+                    </button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2024 Test Sürüşü Randevu Sistemi</p>
+    </footer>
+</body>
+
+</html>

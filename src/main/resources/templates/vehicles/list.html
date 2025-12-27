@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Araçlar - Test Sürüşü</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <a href="/" class="logo">🚗 Test Sürüşü</a>
+            <ul class="nav-links">
+                <li><a th:href="@{/}">Ana Sayfa</a></li>
+                <li><a th:href="@{/vehicles}" class="active">Araçlar</a></li>
+                <li><a th:href="@{/appointments/new}">Randevu Al</a></li>
+                <li><a th:href="@{/appointments/my}">Randevularım</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <h1>Tüm Araçlar</h1>
+
+            <!-- Arama Formu -->
+            <form th:action="@{/vehicles/search}" method="get" class="search-form">
+                <input type="text" name="brand" th:value="${searchTerm}" placeholder="Marka ara...">
+                <button type="submit" class="btn btn-primary">Ara</button>
+            </form>
+
+            <!-- Araç Listesi -->
+            <div class="vehicles-grid">
+                <div th:each="vehicle : ${vehicles}" class="vehicle-card">
+                    <div class="vehicle-image">
+                        <img th:src="@{${vehicle.imageUrl}}" th:alt="${vehicle.fullName}"
+                            onerror="this.src='/images/default-car.png'">
+                    </div>
+                    <div class="vehicle-info">
+                        <h3 th:text="${vehicle.brand + ' ' + vehicle.model}">Marka Model</h3>
+                        <p class="vehicle-year" th:text="${vehicle.year}">2024</p>
+                        <p class="vehicle-desc" th:text="${vehicle.description}">Açıklama</p>
+                        <div class="vehicle-actions">
+                            <a th:href="@{/vehicles/{id}(id=${vehicle.id})}" class="btn btn-outline">Detay</a>
+                            <a th:href="@{/appointments/new(vehicleId=${vehicle.id})}" class="btn btn-primary">
+                                Randevu Al
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div th:if="${#lists.isEmpty(vehicles)}" class="no-results">
+                <p th:if="${searchTerm != null}">
+                    "<span th:text="${searchTerm}"></span>" için sonuç bulunamadı.
+                </p>
+                <p th:unless="${searchTerm != null}">Mevcut araç bulunmamaktadır.</p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2024 Test Sürüşü Randevu Sistemi</p>
+    </footer>
+</body>
+
+</html>

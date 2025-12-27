@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Test Sürüşü</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+    <header class="header admin-header">
+        <nav class="navbar">
+            <a href="/" class="logo">🚗 Test Sürüşü - Admin</a>
+            <ul class="nav-links">
+                <li><a th:href="@{/admin}" class="active">Dashboard</a></li>
+                <li><a th:href="@{/admin/appointments}">Tüm Randevular</a></li>
+                <li><a th:href="@{/}">← Siteye Dön</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <h1>Admin Dashboard</h1>
+
+            <!-- İstatistik Kartları -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number" th:text="${#lists.size(appointments)}">0</div>
+                    <div class="stat-label">Toplam Randevu</div>
+                </div>
+                <div class="stat-card pending">
+                    <div class="stat-number" th:text="${pendingCount}">0</div>
+                    <div class="stat-label">Bekleyen</div>
+                </div>
+                <div class="stat-card today">
+                    <div class="stat-number" th:text="${#lists.size(todayAppointments)}">0</div>
+                    <div class="stat-label">Bugünkü</div>
+                </div>
+            </div>
+
+            <!-- Bugünkü Randevular -->
+            <section class="dashboard-section">
+                <h2>Bugünkü Randevular</h2>
+                <div th:if="${!todayAppointments.isEmpty()}" class="appointments-list">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Saat</th>
+                                <th>Müşteri</th>
+                                <th>Telefon</th>
+                                <th>Araç</th>
+                                <th>Durum</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="apt : ${todayAppointments}">
+                                <td th:text="${#temporals.format(apt.appointmentTime, 'HH:mm')}">10:00</td>
+                                <td th:text="${apt.customerName}">Ahmet Yılmaz</td>
+                                <td th:text="${apt.customerPhone}">05551234567</td>
+                                <td th:text="${apt.vehicle.fullName}">Toyota Corolla</td>
+                                <td>
+                                    <span th:class="'status-badge status-' + ${apt.status.name().toLowerCase()}"
+                                        th:text="${apt.status.displayName}">Beklemede</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div th:if="${todayAppointments.isEmpty()}" class="no-results">
+                    <p>Bugün için randevu bulunmuyor.</p>
+                </div>
+            </section>
+
+            <!-- Son Randevular -->
+            <section class="dashboard-section">
+                <h2>Son Randevular</h2>
+                <a th:href="@{/admin/appointments}" class="btn btn-outline">Tümünü Gör →</a>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2024 Test Sürüşü Randevu Sistemi - Admin Panel</p>
+    </footer>
+</body>
+
+</html>

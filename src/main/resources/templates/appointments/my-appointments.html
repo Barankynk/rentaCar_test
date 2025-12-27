@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Randevularım - Test Sürüşü</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <a href="/" class="logo">🚗 Test Sürüşü</a>
+            <ul class="nav-links">
+                <li><a th:href="@{/}">Ana Sayfa</a></li>
+                <li><a th:href="@{/vehicles}">Araçlar</a></li>
+                <li><a th:href="@{/appointments/new}">Randevu Al</a></li>
+                <li><a th:href="@{/appointments/my}" class="active">Randevularım</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <h1>Randevularım</h1>
+
+            <!-- Başarı Mesajı -->
+            <div th:if="${successMessage}" class="alert alert-success">
+                <p th:text="${successMessage}"></p>
+            </div>
+
+            <!-- Telefon ile Arama -->
+            <form th:action="@{/appointments/my}" method="get" class="search-form">
+                <input type="tel" name="phone" th:value="${searchPhone}"
+                    placeholder="Telefon numaranız (05XX XXX XX XX)" required>
+                <button type="submit" class="btn btn-primary">Randevularımı Bul</button>
+            </form>
+
+            <!-- Randevu Listesi -->
+            <div th:if="${appointments != null && !appointments.isEmpty()}" class="appointments-list">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Araç</th>
+                            <th>Tarih</th>
+                            <th>Saat</th>
+                            <th>Durum</th>
+                            <th>İşlem</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="appointment : ${appointments}">
+                            <td th:text="${appointment.vehicle.fullName}">Toyota Corolla (2023)</td>
+                            <td th:text="${#temporals.format(appointment.appointmentDate, 'dd.MM.yyyy')}">01.01.2024
+                            </td>
+                            <td th:text="${#temporals.format(appointment.appointmentTime, 'HH:mm')}">10:00</td>
+                            <td>
+                                <span th:class="'status-badge status-' + ${appointment.status.name().toLowerCase()}"
+                                    th:text="${appointment.status.displayName}">Beklemede</span>
+                            </td>
+                            <td>
+                                <form th:if="${appointment.status.name() != 'CANCELLED'}"
+                                    th:action="@{/appointments/{id}/cancel(id=${appointment.id})}" method="post"
+                                    style="display:inline;">
+                                    <button type="submit" class="btn btn-danger btn-sm"
+                                        onclick="return confirm('Randevuyu iptal etmek istediğinizden emin misiniz?')">
+                                        İptal Et
+                                    </button>
+                                </form>
+                                <span th:if="${appointment.status.name() == 'CANCELLED'}" class="text-muted">-</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div th:if="${searchPhone != null && (appointments == null || appointments.isEmpty())}" class="no-results">
+                <p>Bu telefon numarasına ait randevu bulunamadı.</p>
+            </div>
+
+            <div th:if="${searchPhone == null}" class="info-box">
+                <p>Randevularınızı görmek için telefon numaranızı girin.</p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2024 Test Sürüşü Randevu Sistemi</p>
+    </footer>
+</body>
+
+</html>

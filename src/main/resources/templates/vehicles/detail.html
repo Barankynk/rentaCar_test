@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${vehicle.fullName} + ' - Test Sürüşü'">Araç Detay</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <a href="/" class="logo">🚗 Test Sürüşü</a>
+            <ul class="nav-links">
+                <li><a th:href="@{/}">Ana Sayfa</a></li>
+                <li><a th:href="@{/vehicles}">Araçlar</a></li>
+                <li><a th:href="@{/appointments/new}">Randevu Al</a></li>
+                <li><a th:href="@{/appointments/my}">Randevularım</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <div class="vehicle-detail">
+                <div class="vehicle-detail-image">
+                    <img th:src="@{${vehicle.imageUrl}}" th:alt="${vehicle.fullName}"
+                        onerror="this.src='/images/default-car.png'">
+                </div>
+                <div class="vehicle-detail-info">
+                    <h1 th:text="${vehicle.brand + ' ' + vehicle.model}">Marka Model</h1>
+                    <p class="vehicle-year"><strong>Yıl:</strong> <span th:text="${vehicle.year}">2024</span></p>
+                    <p class="vehicle-desc" th:text="${vehicle.description}">Açıklama</p>
+
+                    <div class="vehicle-status">
+                        <span th:if="${vehicle.available}" class="status available">✓ Mevcut</span>
+                        <span th:unless="${vehicle.available}" class="status unavailable">✗ Mevcut Değil</span>
+                    </div>
+
+                    <a th:if="${vehicle.available}" th:href="@{/appointments/new(vehicleId=${vehicle.id})}"
+                        class="btn btn-primary btn-large">
+                        Bu Araç İçin Randevu Al
+                    </a>
+
+                    <a th:href="@{/vehicles}" class="btn btn-outline">← Tüm Araçlar</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2024 Test Sürüşü Randevu Sistemi</p>
+    </footer>
+</body>
+
+</html>

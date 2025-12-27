@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tüm Randevular - Admin</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+    <header class="header admin-header">
+        <nav class="navbar">
+            <a href="/" class="logo">🚗 Test Sürüşü - Admin</a>
+            <ul class="nav-links">
+                <li><a th:href="@{/admin}">Dashboard</a></li>
+                <li><a th:href="@{/admin/appointments}" class="active">Tüm Randevular</a></li>
+                <li><a th:href="@{/}">← Siteye Dön</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <h1>Tüm Randevular</h1>
+
+            <!-- Başarı Mesajı -->
+            <div th:if="${successMessage}" class="alert alert-success">
+                <p th:text="${successMessage}"></p>
+            </div>
+
+            <!-- Filtre -->
+            <form th:action="@{/admin/appointments}" method="get" class="filter-form">
+                <label for="status">Duruma Göre Filtrele:</label>
+                <select name="status" id="status" onchange="this.form.submit()">
+                    <option value="">Tümü</option>
+                    <option th:each="s : ${statuses}" th:value="${s.name()}" th:text="${s.displayName}"
+                        th:selected="${selectedStatus == s.name()}">
+                    </option>
+                </select>
+            </form>
+
+            <!-- Randevu Listesi -->
+            <div th:if="${!appointments.isEmpty()}" class="appointments-list">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Tarih</th>
+                            <th>Saat</th>
+                            <th>Müşteri</th>
+                            <th>Telefon</th>
+                            <th>Araç</th>
+                            <th>Durum</th>
+                            <th>İşlemler</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="apt : ${appointments}">
+                            <td th:text="${apt.id}">#1</td>
+                            <td th:text="${#temporals.format(apt.appointmentDate, 'dd.MM.yyyy')}">01.01.2024</td>
+                            <td th:text="${#temporals.format(apt.appointmentTime, 'HH:mm')}">10:00</td>
+                            <td th:text="${apt.customerName}">Ahmet Yılmaz</td>
+                            <td th:text="${apt.customerPhone}">05551234567</td>
+                            <td th:text="${apt.vehicle.fullName}">Toyota Corolla</td>
+                            <td>
+                                <span th:class="'status-badge status-' + ${apt.status.name().toLowerCase()}"
+                                    th:text="${apt.status.displayName}">Beklemede</span>
+                            </td>
+                            <td class="actions">
+                                <!-- Onayla -->
+                                <form th:if="${apt.status.name() == 'PENDING'}"
+                                    th:action="@{/admin/appointments/{id}/confirm(id=${apt.id})}" method="post"
+                                    style="display:inline;">
+                                    <button type="submit" class="btn btn-success btn-sm">Onayla</button>
+                                </form>
+                                <!-- İptal -->
+                                <form th:if="${apt.status.name() != 'CANCELLED'}"
+                                    th:action="@{/admin/appointments/{id}/cancel(id=${apt.id})}" method="post"
+                                    style="display:inline;">
+                                    <button type="submit" class="btn btn-danger btn-sm">İptal</button>
+                                </form>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div th:if="${appointments.isEmpty()}" class="no-results">
+                <p>Randevu bulunamadı.</p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2024 Test Sürüşü Randevu Sistemi - Admin Panel</p>
+    </footer>
+</body>
+
+</html>

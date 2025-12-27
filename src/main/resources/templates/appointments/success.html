@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Randevu Başarılı - Test Sürüşü</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <a href="/" class="logo">🚗 Test Sürüşü</a>
+            <ul class="nav-links">
+                <li><a th:href="@{/}">Ana Sayfa</a></li>
+                <li><a th:href="@{/vehicles}">Araçlar</a></li>
+                <li><a th:href="@{/appointments/new}">Randevu Al</a></li>
+                <li><a th:href="@{/appointments/my}">Randevularım</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            <div class="success-container">
+                <div class="success-icon">✓</div>
+                <h1>Randevunuz Oluşturuldu!</h1>
+                <p th:if="${successMessage}" th:text="${successMessage}">
+                    Randevunuz başarıyla oluşturuldu.
+                </p>
+                <p>En kısa sürede sizinle iletişime geçeceğiz.</p>
+
+                <div class="success-actions">
+                    <a th:href="@{/appointments/my}" class="btn btn-primary">Randevularımı Gör</a>
+                    <a th:href="@{/}" class="btn btn-outline">Ana Sayfaya Dön</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2024 Test Sürüşü Randevu Sistemi</p>
+    </footer>
+</body>
+
+</html>
