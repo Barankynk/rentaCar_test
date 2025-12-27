@@ -26,13 +26,13 @@
             <div class="form-container">
                 <h1>Test Sürüşü Randevusu</h1>
 
-                <!-- Hata Mesajı -->
-                <div th:if="${#fields.hasErrors('*')}" class="alert alert-error" id="errorAlert">
-                    <p>Lütfen formdaki hataları düzeltin.</p>
-                </div>
-
                 <form th:action="@{/appointments}" th:object="${appointmentForm}" method="post"
                     class="appointment-form">
+
+                    <!-- Hata Mesajı -->
+                    <div th:if="${#fields.hasErrors('*')}" class="alert alert-error" id="errorAlert">
+                        <p>Lütfen formdaki hataları düzeltin.</p>
+                    </div>
 
                     <!-- Araç Seçimi -->
                     <div class="form-group">
