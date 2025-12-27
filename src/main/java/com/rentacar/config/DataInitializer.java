@@ -5,11 +5,14 @@ import com.rentacar.repository.VehicleRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 
 /**
  * Uygulama başlatılırken örnek veri yükle
+ * NOT: Test ortamında çalışmaz (@Profile("!test"))
  */
 @Configuration
+@Profile("!test")
 public class DataInitializer {
 
     @Bean
