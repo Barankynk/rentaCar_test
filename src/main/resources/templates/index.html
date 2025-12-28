@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="tr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Test Sürüşü Randevu Sistemi</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
+
 <body>
     <!-- Header -->
     <header class="header">
@@ -37,8 +39,8 @@
             <div class="vehicles-grid">
                 <div th:each="vehicle : ${vehicles}" class="vehicle-card">
                     <div class="vehicle-image">
-                        <img th:src="@{${vehicle.imageUrl}}" th:alt="${vehicle.fullName}" 
-                             onerror="this.src='/images/default-car.png'">
+                        <img th:src="@{${vehicle.imageUrl}}" th:alt="${vehicle.fullName}"
+                            onerror="this.onerror=null;this.src='/images/default-car.png'">
                     </div>
                     <div class="vehicle-info">
                         <h3 th:text="${vehicle.brand + ' ' + vehicle.model}">Marka Model</h3>
@@ -50,7 +52,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <!-- Araç yoksa -->
             <div th:if="${#lists.isEmpty(vehicles)}" class="no-vehicles">
                 <p>Şu anda mevcut araç bulunmamaktadır.</p>
@@ -63,4 +65,5 @@
         <p>&copy; 2024 Test Sürüşü Randevu Sistemi - STLC Projesi</p>
     </footer>
 </body>
+
 </html>

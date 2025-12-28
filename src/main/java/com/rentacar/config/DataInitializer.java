@@ -19,29 +19,29 @@ public class DataInitializer {
     CommandLineRunner initDatabase(VehicleRepository vehicleRepository) {
         return args -> {
             // Örnek araçlar
-            Vehicle v1 = new Vehicle("Toyota", "Corolla", 2023);
-            v1.setDescription("Ekonomik ve güvenilir sedan");
-            v1.setImageUrl("/images/toyota-corolla.jpg");
+            Vehicle v1 = new Vehicle("BMW", "M3", 2025);
+            v1.setDescription("Bir arabadan daha fazlası");
+            v1.setImageUrl("/images/bmwM3.jpg");
             vehicleRepository.save(v1);
 
             Vehicle v2 = new Vehicle("BMW", "320i", 2023);
             v2.setDescription("Sportif ve lüks sedan");
-            v2.setImageUrl("/images/bmw-320i.jpg");
+            v2.setImageUrl("/images/bmwG20.jpg");
             vehicleRepository.save(v2);
 
-            Vehicle v3 = new Vehicle("Mercedes", "C200", 2024);
-            v3.setDescription("Premium segment lideri");
-            v3.setImageUrl("/images/mercedes-c200.jpg");
+            Vehicle v3 = new Vehicle("Porsche", "GT3", 2024);
+            v3.setDescription("Her devir bir hikâye");
+            v3.setImageUrl("/images/porsche911.jpg");
             vehicleRepository.save(v3);
 
-            Vehicle v4 = new Vehicle("Volkswagen", "Golf", 2023);
-            v4.setDescription("Kompakt sınıfın efsanesi");
-            v4.setImageUrl("/images/vw-golf.jpg");
+            Vehicle v4 = new Vehicle("BMW", "M4", 2024);
+            v4.setDescription("Her bastığında kalp hızlanır.");
+            v4.setImageUrl("/images/bmwM4.jpg");
             vehicleRepository.save(v4);
 
-            Vehicle v5 = new Vehicle("Audi", "A3", 2024);
-            v5.setDescription("Premium kompakt sedan");
-            v5.setImageUrl("/images/audi-a3.jpg");
+            Vehicle v5 = new Vehicle("Scirocco", "1.4", 2015);
+            v5.setDescription("Boşluk mu? Girer");
+            v5.setImageUrl("/images/scirocco.jpg");
             vehicleRepository.save(v5);
 
             System.out.println("✅ Örnek araçlar yüklendi: " + vehicleRepository.count() + " araç");

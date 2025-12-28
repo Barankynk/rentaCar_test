@@ -26,7 +26,8 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(auth -> auth
                         // Public sayfalar
-                        .requestMatchers("/", "/vehicles/**", "/appointments/**", "/css/**", "/js/**", "/images/**")
+                        .requestMatchers("/", "/vehicles/**", "/appointments/**", "/error", "/css/**", "/js/**",
+                                "/images/**", "/favicon.ico")
                         .permitAll()
                         // H2 Console (development)
                         .requestMatchers("/h2-console/**").permitAll()
