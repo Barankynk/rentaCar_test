@@ -31,7 +31,7 @@ public class DataInitializer {
 
             Vehicle v3 = new Vehicle("Porsche", "GT3", 2024);
             v3.setDescription("Her devir bir hikâye");
-            v3.setImageUrl("/images/porsche911.jpg");
+            v3.setImageUrl("/images/gt3.jpg");
             vehicleRepository.save(v3);
 
             Vehicle v4 = new Vehicle("BMW", "M4", 2024);
@@ -43,6 +43,11 @@ public class DataInitializer {
             v5.setDescription("Boşluk mu? Girer");
             v5.setImageUrl("/images/scirocco.jpg");
             vehicleRepository.save(v5);
+
+            Vehicle v6 = new Vehicle("skyline", "gtr34", 1999);
+            v6.setDescription("Efsane");
+            v6.setImageUrl("/images/gtr34.jpg");
+            vehicleRepository.save(v6);
 
             System.out.println("✅ Örnek araçlar yüklendi: " + vehicleRepository.count() + " araç");
         };

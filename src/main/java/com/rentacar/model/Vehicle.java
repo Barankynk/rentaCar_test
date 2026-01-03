@@ -26,7 +26,7 @@ public class Vehicle {
     private String model;
 
     @NotNull(message = "Yıl boş olamaz")
-    @Min(value = 2000, message = "Yıl en az 2000 olmalı")
+    @Min(value = 1990, message = "Yıl en az 1990 olmalı")
     @Column(name = "production_year", nullable = false)
     private Integer year;
 

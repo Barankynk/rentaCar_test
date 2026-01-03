@@ -59,7 +59,7 @@ body {
 }
 
 .nav-links a {
-    color: rgba(255,255,255,0.8);
+    color: rgba(255, 255, 255, 0.8);
     text-decoration: none;
     transition: color 0.3s;
 }
@@ -70,28 +70,85 @@ body {
 }
 
 .admin-link {
-    background: rgba(255,255,255,0.2);
+    background: rgba(255, 255, 255, 0.2);
     padding: 8px 15px;
     border-radius: 5px;
 }
 
 /* Hero Section */
+/* Hero Section - Drift & Motion Blues */
+/* Hero Section - Ultimate Drive Experience */
 .hero {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background-color: #0f172a;
+    /* Derin gece mavisi */
+    background-image:
+        radial-gradient(ellipse at top, rgba(56, 189, 248, 0.2) 0%, transparent 50%),
+        linear-gradient(to bottom, #0f172a 0%, #1e293b 100%);
     color: white;
-    padding: 80px 20px;
+    padding: 80px 20px 100px;
+    /* Boşluklar azaltıldı: Kompakt Görünüm */
     text-align: center;
+    position: relative;
+    overflow: hidden;
+    /* Alt kısma ultra yumuşak geçiş */
+    mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 80%, rgba(0, 0, 0, 0) 100%);
+    -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 80%, rgba(0, 0, 0, 0) 100%);
+}
+
+/* Animasyonlu Arka Plan Grid (Perspective Grid) */
+.hero::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    right: -50%;
+    bottom: -50%;
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    background-size: 50px 50px;
+    transform: perspective(500px) rotateX(60deg) translateY(0);
+    animation: driveGrid 10s linear infinite;
+    z-index: 0;
+    pointer-events: none;
+}
+
+@keyframes driveGrid {
+    0% {
+        transform: perspective(500px) rotateX(60deg) translateY(0);
+    }
+
+    100% {
+        transform: perspective(500px) rotateX(60deg) translateY(50px);
+    }
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+    margin: 0 auto;
 }
 
 .hero h1 {
-    font-size: 2.5rem;
-    margin-bottom: 20px;
+    font-size: 2.8rem;
+    /* Boyut küçültüldü: 3.5rem -> 2.8rem */
+    font-weight: 800;
+    margin-bottom: 15px;
+    line-height: 1.2;
+    text-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    background: -webkit-linear-gradient(white, #94a3b8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -0.5px;
 }
 
 .hero p {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
+    /* Boyut küçültüldü: 1.4rem -> 1.1rem */
     margin-bottom: 30px;
-    opacity: 0.9;
+    color: #cbd5e1;
+    font-weight: 300;
 }
 
 /* Buttons */
@@ -107,12 +164,26 @@ body {
 }
 
 .btn-primary {
-    background: #667eea;
+    background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%);
+    /* Premium Gradient Kırmızı */
     color: white;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 16px 40px;
+    border-radius: 50px;
+    /* Hap şeklinde modern buton */
+    box-shadow: 0 10px 25px rgba(220, 38, 38, 0.4);
+    /* Glow efekti */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .btn-primary:hover {
-    background: #5a6fd6;
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(220, 38, 38, 0.5);
+    /* Hover'da daha güçlü glow */
+    background: linear-gradient(135deg, #f87171 0%, #dc2626 100%);
 }
 
 .btn-secondary {
@@ -184,13 +255,13 @@ body {
     background: white;
     border-radius: 10px;
     overflow: hidden;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s, box-shadow 0.3s;
 }
 
 .vehicle-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
 }
 
 .vehicle-image {
@@ -238,7 +309,7 @@ body {
     background: white;
     padding: 40px;
     border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
 .form-container h1 {
@@ -356,7 +427,7 @@ body {
     background: white;
     border-radius: 10px;
     overflow: hidden;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
 .data-table th,
@@ -418,7 +489,7 @@ body {
     padding: 30px;
     border-radius: 10px;
     text-align: center;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
 .stat-number {
@@ -446,7 +517,7 @@ body {
     padding: 30px;
     border-radius: 10px;
     margin-bottom: 30px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
 .dashboard-section h2 {
@@ -514,7 +585,7 @@ body {
 /* Footer */
 .footer {
     background: #1a1a2e;
-    color: rgba(255,255,255,0.7);
+    color: rgba(255, 255, 255, 0.7);
     text-align: center;
     padding: 20px;
     margin-top: auto;
@@ -526,20 +597,20 @@ body {
         flex-direction: column;
         gap: 15px;
     }
-    
+
     .nav-links {
         flex-wrap: wrap;
         justify-content: center;
     }
-    
+
     .hero h1 {
         font-size: 1.8rem;
     }
-    
+
     .form-row {
         flex-direction: column;
     }
-    
+
     .vehicle-detail {
         grid-template-columns: 1fr;
     }
